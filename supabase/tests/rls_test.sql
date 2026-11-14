@@ -3,7 +3,7 @@
 begin;
 create extension if not exists pgtap with schema extensions;
 
-select plan(30);
+select plan(33);
 
 -- Contexto de prueba (como postgres)
 create temp table ctx as
@@ -146,6 +146,21 @@ select is(
 select is(
   (select count(*) from storage.objects where bucket_id = 'vet-docs'),
   1::bigint, 'El dueño sí lee sus documentos veterinarios');
+
+-- Fotos: el dueño inserta y reordena, pero no puede reescribir la ruta (regresión del upsert)
+select lives_ok($$
+  insert into public.animal_images (animal_id, storage_path, sort_order)
+  values ((select animal_id from public.listings where id = (select canela from ctx)),
+          '22222222-2222-2222-2222-222222222222/test/nueva.jpg', 1) $$,
+  'El dueño agrega fotos a su animal');
+select lives_ok($$
+  update public.animal_images set sort_order = 2
+  where storage_path = '22222222-2222-2222-2222-222222222222/test/nueva.jpg' $$,
+  'El dueño reordena sus fotos');
+select throws_ok($$
+  update public.animal_images set storage_path = 'otra/ruta.jpg'
+  where storage_path = '22222222-2222-2222-2222-222222222222/test/nueva.jpg' $$,
+  '42501', null, 'Nadie reescribe la ruta de una foto');
 
 -- Ana ya no ve la publicación moderada; su dueña sí
 select pg_temp.act_as('11111111-1111-1111-1111-111111111111');

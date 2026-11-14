@@ -10,6 +10,7 @@ Dos dispositivos Android al mismo tiempo; cada caso indica quién actúa: **[C]*
    - **[C]** `cliente@petites.test` — Distrito Nacional
    - **[V]** `vendedor@petites.test` — refugio en Santiago
    - `admin@petites.test` — panel de administración (opcional)
+   - `nuevo.cliente@petites.test` y `nuevo.vendedor@petites.test` — verificadas pero **sin onboarding**: al entrar muestran la pantalla de bienvenida (caso A6). Después de completarlo ya no vuelve a salir; pide a Claude que las restablezca si hace falta repetirlo.
 3. **Registro y recuperación (A1, A3)**: los correos salen por Resend en modo de prueba, así que **solo llegan al correo dueño de la cuenta Resend**. Hasta verificar un dominio en Resend, esos casos los prueba esa persona; el resto usa las cuentas preparadas.
 
 Registra cada fallo con: ID del caso, dispositivo/Android, pasos, resultado esperado vs. obtenido y captura.
@@ -23,6 +24,9 @@ Registra cada fallo con: ID del caso, dispositivo/Android, pasos, resultado espe
 | A3 | C | ¿Olvidaste tu contraseña? con correo propio | Llega código y permite cambiarla |
 | A4 | V | Editar perfil (nombre, ciudad, foto) | Se guarda y se ve en el perfil público |
 | A5 | C/V | Cerrar sesión y volver a entrar | Vuelve a Bienvenida; la sesión se recupera al reabrir la app |
+| A6 | C/V | Entrar con `nuevo.cliente@` / `nuevo.vendedor@` → completar onboarding (provincia, ciudad, tipo de perfil) | Llega a Inicio; al volver a entrar no repite el onboarding |
+| B8 | V | Publicar con 3+ fotos tomadas con el teléfono | Se publica sin error de permisos; las fotos cargan rápido (se comprimen antes de subir) |
+| B9 | V | Raza: escribir "pastor aleman" (sin tilde) en el buscador de razas | Encuentra "Pastor Alemán"; el catálogo trae 500+ razas de perro |
 
 ## B. Publicar (vendedor)
 

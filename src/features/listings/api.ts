@@ -46,14 +46,22 @@ async function uploadNewImages(userId: string, animalId: string, images: ImageAs
   const uploaded: string[] = [];
   try {
     for (const [index, img] of images.entries()) {
-      const path = img.storagePath ?? (await uploadFile(buckets.animalPhotos, userId, animalId, img));
-      if (!img.storagePath) uploaded.push(path);
+      // Sin upsert: la BD solo permite actualizar sort_order (grant por columna), así que
+      // las fotos existentes se reordenan y las nuevas se insertan.
+      if (img.storagePath) {
+        const { error } = await supabase
+          .from('animal_images')
+          .update({ sort_order: index })
+          .eq('animal_id', animalId)
+          .eq('storage_path', img.storagePath);
+        if (error) throw error;
+        continue;
+      }
+      const path = await uploadFile(buckets.animalPhotos, userId, animalId, img);
+      uploaded.push(path);
       const { error } = await supabase
         .from('animal_images')
-        .upsert(
-          { animal_id: animalId, storage_path: path, sort_order: index },
-          { onConflict: 'animal_id,storage_path' },
-        );
+        .insert({ animal_id: animalId, storage_path: path, sort_order: index });
       if (error) throw error;
     }
     return uploaded;

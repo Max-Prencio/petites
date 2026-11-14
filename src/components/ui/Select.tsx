@@ -25,6 +25,16 @@ interface Props<T extends string | number> {
   testID?: string;
 }
 
+const MAX_VISIBLE = 80;
+
+// Búsqueda sin distinguir mayúsculas ni tildes ("pastor aleman" encuentra "Pastor Alemán")
+const normalize = (value: string) =>
+  value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+
 export function Select<T extends string | number>({
   label,
   placeholder = 'Seleccionar',
@@ -40,10 +50,12 @@ export function Select<T extends string | number>({
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const selected = options.find((o) => o.value === value);
-  const filtered = useMemo(
-    () => (query ? options.filter((o) => o.label.toLowerCase().includes(query.toLowerCase())) : options),
-    [options, query],
-  );
+  const filtered = useMemo(() => {
+    const q = normalize(query);
+    return q ? options.filter((o) => normalize(o.label).includes(q)) : options;
+  }, [options, query]);
+  // Listas largas (p. ej. 500+ razas de perro): se pintan pocas filas y se invita a buscar
+  const visible = filtered.slice(0, MAX_VISIBLE);
 
   return (
     <View className="gap-1.5">
@@ -81,7 +93,7 @@ export function Select<T extends string | number>({
               <Text className="text-ink-muted">Quitar selección</Text>
             </Pressable>
           ) : null}
-          {filtered.map((option) => {
+          {visible.map((option) => {
             const isSelected = option.value === value;
             return (
               <Pressable
@@ -101,6 +113,11 @@ export function Select<T extends string | number>({
             );
           })}
           {filtered.length === 0 ? <Text className="p-4 text-ink-muted">Sin resultados</Text> : null}
+          {filtered.length > MAX_VISIBLE ? (
+            <Text className="p-4 text-center text-ink-muted">
+              {`Mostrando ${MAX_VISIBLE} de ${filtered.length}. Escribe para encontrar la tuya.`}
+            </Text>
+          ) : null}
         </View>
       </Modal>
     </View>

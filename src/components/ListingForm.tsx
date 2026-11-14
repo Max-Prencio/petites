@@ -3,8 +3,9 @@ import { HeartHandshake, Tag } from 'lucide-react-native';
 import { useState } from 'react';
 import { Controller, useForm, useWatch, type FieldPath } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
-import Animated, { FadeInRight } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { sexLabel, sizeLabel, triStateLabel } from '@/constants/labels';
 import { colors } from '@/constants/theme';
 import { useBreeds, useCategories, useProvinces } from '@/features/animals';
@@ -89,7 +90,7 @@ export function ListingForm({ initial, submitting, submitLabel, allowDraft = fal
         <Stepper steps={steps} current={step} />
       </View>
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerClassName="gap-5 px-5 pb-8">
-        <Animated.View key={step} entering={FadeInRight.duration(250)} className="gap-5">
+        <Animated.View key={step} entering={fadeUp()} className="gap-5">
           {step === 0 ? (
             <>
               <Text variant="title">¿Qué quieres publicar?</Text>

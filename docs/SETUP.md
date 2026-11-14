@@ -80,5 +80,6 @@ pnpm e2e                # Maestro con la app instalada en simulador/emulador y S
 - EAS: proyecto `@maxwel.prencio/petites`; variables `EXPO_PUBLIC_SUPABASE_*` en el entorno `preview`.
 - APK para QA: `npx eas-cli build -p android --profile preview` → enlace/QR de instalación interna.
 - Correo: SMTP de Resend (`smtp.resend.com:465`, remitente `onboarding@resend.dev`) con las plantillas de código de 6 dígitos; API key solo en `supabase/.temp/resend-api-key`. Modo prueba: solo entrega al dueño de la cuenta Resend. Para todos: verificar un dominio en Resend (SPF/DKIM) y cambiar `admin_email` a `no-reply@<dominio>`.
+- **Staging sin confirmación de correo** (`enable_confirmations = false`) mientras no haya dominio verificado: el registro devuelve sesión y la app salta la pantalla de código. Al verificar dominio, volver a `true`.
 - Para volver a aplicar: copiar `config.toml` con el bloque `[auth.email.smtp]` y `RESEND_API_KEY=... supabase config push --workdir <copia>`.
 - Push remoto en Android requiere credenciales FCM en EAS (`eas credentials`); las notificaciones dentro de la app funcionan sin ellas.

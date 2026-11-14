@@ -4,8 +4,9 @@ import { Lightbulb, ScrollText } from 'lucide-react-native';
 import { useState } from 'react';
 import { Controller, useForm, useWatch, type FieldPath } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
-import Animated, { FadeInRight } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { FormChips, FormInput, FormToggle } from '@/components/form';
 import {
   Button,
@@ -130,7 +131,7 @@ export default function NewRequestScreen() {
         <Stepper steps={steps} current={step} />
       </View>
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerClassName="gap-5 px-5 pb-8">
-        <Animated.View key={step} entering={FadeInRight.duration(250)} className="gap-5">
+        <Animated.View key={step} entering={fadeUp()} className="gap-5">
           {step === 0 ? (
             <>
               <Text variant="title">Cuéntanos de tu hogar</Text>

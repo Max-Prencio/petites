@@ -3,8 +3,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MessageCircle, PartyPopper, PawPrint, Share2 } from 'lucide-react-native';
 import { useState } from 'react';
 import { Share, View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { duration, fadeUp } from '@/constants/motion';
 import { RequestTimeline } from '@/components/RequestTimeline';
 import {
   Avatar,
@@ -102,7 +103,7 @@ export default function RequestDetailScreen() {
 
       {r.status === 'delivered' ? (
         <Animated.View
-          entering={ZoomIn.springify()}
+          entering={fadeUp(0, duration.slow)}
           className="items-center gap-2 rounded-3xl bg-secondary p-5"
         >
           <PartyPopper size={36} color="#FFFFFF" />

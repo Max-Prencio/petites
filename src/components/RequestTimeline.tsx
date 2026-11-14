@@ -1,7 +1,8 @@
 import { Check } from 'lucide-react-native';
 import { View } from 'react-native';
-import Animated, { FadeInLeft } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { deliveryTrack, pickupTrack, requestStatusCopy, type RequestStatus } from '@/constants/requestStatus';
 import type { RequestEvent, Enums } from '@/types/models';
 import { formatDateTime } from '@/utils/format';
@@ -30,7 +31,7 @@ export function RequestTimeline({ status, method, events }: Props) {
         const current = i === reachedIndex && !closedBadly && status !== 'delivered';
         const at = timeFor(step);
         return (
-          <Animated.View key={step} entering={FadeInLeft.delay(i * 60)} className="flex-row gap-3">
+          <Animated.View key={step} entering={fadeUp(i)} className="flex-row gap-3">
             <View className="items-center">
               <View
                 className={`h-7 w-7 items-center justify-center rounded-full ${

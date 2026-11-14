@@ -3,13 +3,13 @@ import { AlertCircle, PawPrint } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import Animated, {
-  FadeInUp,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { colors } from '@/constants/theme';
 import { Button } from './Button';
 import { Text } from './Text';
@@ -33,7 +33,7 @@ interface EmptyProps {
 
 export function EmptyState({ icon: Icon = PawPrint, title, message, actionLabel, onAction }: EmptyProps) {
   return (
-    <Animated.View entering={FadeInUp.duration(300)} className="flex-1 items-center justify-center gap-3 p-8">
+    <Animated.View entering={fadeUp()} className="flex-1 items-center justify-center gap-3 p-8">
       <View className="h-20 w-20 items-center justify-center rounded-full bg-primary-light">
         <Icon size={34} color={colors.primary} />
       </View>

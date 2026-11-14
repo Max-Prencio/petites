@@ -2,6 +2,8 @@ import { CheckCircle2, Info, XCircle } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { Pressable } from 'react-native';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
+
+import { duration, easeOut } from '@/constants/motion';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useUiStore } from '@/stores/uiStore';
@@ -26,7 +28,7 @@ export function ToastHost() {
   return (
     <Animated.View
       key={toast.id}
-      entering={FadeInUp.springify()}
+      entering={FadeInUp.duration(duration.base).easing(easeOut)}
       exiting={FadeOutUp}
       className="absolute left-4 right-4 z-50"
       style={{ top: insets.top + 8 }}

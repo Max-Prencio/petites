@@ -14,6 +14,7 @@ import {
 } from 'lucide-react-native';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import {
   Avatar,
@@ -25,6 +26,7 @@ import {
   Screen,
   Text,
 } from '@/components/ui';
+import { fadeUp } from '@/constants/motion';
 import { partnerTypeLabel } from '@/constants/labels';
 import { colors } from '@/constants/theme';
 import { useIsAdmin, useMyProfile, useSignOut } from '@/features/auth';
@@ -46,29 +48,33 @@ function Row({
   label,
   onPress,
   badge,
+  index = 0,
 }: {
   icon: LucideIcon;
   label: string;
   onPress: () => void;
   badge?: number;
+  index?: number;
 }) {
   return (
-    <PressableScale
-      onPress={onPress}
-      className="flex-row items-center gap-3 px-4 py-3.5"
-      accessibilityRole="button"
-    >
-      <View className="h-9 w-9 items-center justify-center rounded-xl bg-ivory">
-        <Icon size={18} color={colors.secondary} />
-      </View>
-      <Text className="flex-1 font-semibold">{label}</Text>
-      {badge ? (
-        <View className="h-6 min-w-[24px] items-center justify-center rounded-full bg-primary px-1.5">
-          <Text className="text-[11px] font-bold text-white">{badge}</Text>
+    <Animated.View entering={fadeUp(index)}>
+      <PressableScale
+        onPress={onPress}
+        className="flex-row items-center gap-3 px-4 py-3.5"
+        accessibilityRole="button"
+      >
+        <View className="h-9 w-9 items-center justify-center rounded-xl bg-ivory">
+          <Icon size={18} color={colors.secondary} />
         </View>
-      ) : null}
-      <ChevronRight size={18} color={colors.inkFaint} />
-    </PressableScale>
+        <Text className="flex-1 font-semibold">{label}</Text>
+        {badge ? (
+          <View className="h-6 min-w-[24px] items-center justify-center rounded-full bg-primary px-1.5">
+            <Text className="text-[11px] font-bold text-white">{badge}</Text>
+          </View>
+        ) : null}
+        <ChevronRight size={18} color={colors.inkFaint} />
+      </PressableScale>
+    </Animated.View>
   );
 }
 
@@ -112,18 +118,26 @@ export default function ProfileScreen() {
         </View>
 
         <View className="overflow-hidden rounded-3xl border border-line bg-surface">
-          <Row icon={Heart} label="Mi lista" onPress={go('/profile/favorites')} />
-          <Row icon={Send} label="Mis solicitudes" onPress={go('/requests')} />
-          <Row icon={Inbox} label="Solicitudes recibidas" onPress={go('/requests/received')} />
-          <Row icon={LayoutGrid} label="Mis publicaciones" onPress={go('/listings/mine')} />
-          <Row icon={Bell} label="Notificaciones" onPress={go('/profile/notifications')} badge={unread} />
-          <Row icon={Pencil} label="Editar perfil" onPress={go('/profile/edit')} />
+          <Row icon={Heart} index={1} label="Mi lista" onPress={go('/profile/favorites')} />
+          <Row icon={Send} index={2} label="Mis solicitudes" onPress={go('/requests')} />
+          <Row icon={Inbox} index={3} label="Solicitudes recibidas" onPress={go('/requests/received')} />
+          <Row icon={LayoutGrid} index={4} label="Mis publicaciones" onPress={go('/listings/mine')} />
+          <Row
+            icon={Bell}
+            index={5}
+            label="Notificaciones"
+            onPress={go('/profile/notifications')}
+            badge={unread}
+          />
+          <Row icon={Pencil} index={6} label="Editar perfil" onPress={go('/profile/edit')} />
         </View>
 
         <View className="overflow-hidden rounded-3xl border border-line bg-surface">
-          {isAdmin ? <Row icon={ShieldCheck} label="Panel de administración" onPress={go('/admin')} /> : null}
-          <Row icon={Info} label="Bienestar animal y normas" onPress={go('/profile/about')} />
-          <Row icon={LogOut} label="Cerrar sesión" onPress={() => setConfirm(true)} />
+          {isAdmin ? (
+            <Row icon={ShieldCheck} index={7} label="Panel de administración" onPress={go('/admin')} />
+          ) : null}
+          <Row icon={Info} index={8} label="Bienestar animal y normas" onPress={go('/profile/about')} />
+          <Row icon={LogOut} index={9} label="Cerrar sesión" onPress={() => setConfirm(true)} />
         </View>
       </ScrollView>
       <ConfirmDialog

@@ -11,9 +11,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import Animated, { FadeInUp } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { duration, fadeUp } from '@/constants/motion';
 import { ReportModal } from '@/components/ReportModal';
 import {
   Avatar,
@@ -122,7 +123,7 @@ export default function ChatScreen() {
               const mine = item.sender_id === userId;
               return (
                 <Animated.View
-                  entering={FadeInUp.duration(200)}
+                  entering={fadeUp(0, duration.fast)}
                   className={`max-w-[80%] ${mine ? 'self-end' : 'self-start'}`}
                 >
                   <View

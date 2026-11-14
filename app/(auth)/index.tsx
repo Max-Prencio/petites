@@ -1,8 +1,9 @@
 import { useRouter } from 'expo-router';
 import { Heart, MessageCircle, PawPrint, ShieldCheck } from 'lucide-react-native';
 import { View } from 'react-native';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { duration, fadeUp } from '@/constants/motion';
 import { Button, Screen, Text } from '@/components/ui';
 import { brand } from '@/constants/brand';
 import { colors } from '@/constants/theme';
@@ -17,7 +18,7 @@ export default function WelcomeScreen() {
   const router = useRouter();
   return (
     <Screen edges={['top', 'bottom']} contentClassName="justify-between px-6 py-6">
-      <Animated.View entering={FadeInDown.duration(500)} className="mt-6 items-center gap-4">
+      <Animated.View entering={fadeUp(0, duration.slow)} className="mt-6 items-center gap-4">
         <View className="h-24 w-24 items-center justify-center rounded-[32px] bg-primary">
           <PawPrint size={48} color="#FFFFFF" />
         </View>
@@ -31,7 +32,7 @@ export default function WelcomeScreen() {
         {highlights.map(({ icon: Icon, text }, i) => (
           <Animated.View
             key={text}
-            entering={FadeInUp.delay(200 + i * 120)}
+            entering={fadeUp(i + 2, duration.slow)}
             className="flex-row items-center gap-3"
           >
             <View className="h-11 w-11 items-center justify-center rounded-2xl bg-surface">
@@ -42,7 +43,7 @@ export default function WelcomeScreen() {
         ))}
       </View>
 
-      <Animated.View entering={FadeInUp.delay(600)} className="gap-3">
+      <Animated.View entering={fadeUp(6, duration.slow)} className="gap-3">
         <Button
           testID="go-register"
           title="Crear mi cuenta"

@@ -16,9 +16,10 @@ import {
 } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, ScrollView, Share, useWindowDimensions, View } from 'react-native';
-import Animated, { FadeInUp } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { duration, fadeUp } from '@/constants/motion';
 import { ReportModal } from '@/components/ReportModal';
 import {
   Avatar,
@@ -152,7 +153,7 @@ export default function AnimalDetailScreen() {
         </View>
 
         <Animated.View
-          entering={FadeInUp.duration(350)}
+          entering={fadeUp(0, duration.slow)}
           className="-mt-6 gap-4 rounded-t-3xl bg-ivory px-5 pt-5"
         >
           <View className="flex-row flex-wrap gap-2">

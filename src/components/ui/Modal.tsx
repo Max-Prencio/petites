@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react';
+import { Children, type ReactNode } from 'react';
 import { KeyboardAvoidingView, Modal as RNModal, Pressable, ScrollView, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { X } from 'lucide-react-native';
 
+import { fadeUp, sheetIn } from '@/constants/motion';
 import { IconButton } from './IconButton';
 import { Text } from './Text';
 
@@ -19,13 +20,16 @@ interface Props {
 // Hoja inferior animada que se usa como modal en toda la app.
 export function Modal({ visible, onClose, title, children, footer, scrollable = true }: Props) {
   const insets = useSafeAreaInsets();
+  // Cada opción del menú entra con fade-up escalonado (la hoja ya subió casi por completo)
+  const items = Children.toArray(children).map((child, i) => (
+    <Animated.View key={i} entering={fadeUp(i + 2)}>
+      {child}
+    </Animated.View>
+  ));
   return (
     <RNModal visible={visible} transparent animationType="none" onRequestClose={onClose} statusBarTranslucent>
       {visible ? (
-        <KeyboardAvoidingView
-          behavior="padding"
-          className="flex-1 justify-end"
-        >
+        <KeyboardAvoidingView behavior="padding" className="flex-1 justify-end">
           <Animated.View
             entering={FadeIn.duration(180)}
             exiting={FadeOut.duration(150)}
@@ -34,7 +38,7 @@ export function Modal({ visible, onClose, title, children, footer, scrollable = 
             <Pressable className="flex-1 bg-black/40" onPress={onClose} accessibilityLabel="Cerrar" />
           </Animated.View>
           <Animated.View
-            entering={SlideInDown.springify().damping(20)}
+            entering={sheetIn}
             exiting={SlideOutDown.duration(180)}
             className="max-h-[88%] rounded-t-3xl bg-ivory"
             style={{ paddingBottom: Math.max(insets.bottom, 16) }}
@@ -54,10 +58,10 @@ export function Modal({ visible, onClose, title, children, footer, scrollable = 
                 keyboardShouldPersistTaps="handled"
                 contentContainerClassName="pb-4 gap-4"
               >
-                {children}
+                {items}
               </ScrollView>
             ) : (
-              <View className="gap-4 px-5 pb-4">{children}</View>
+              <View className="gap-4 px-5 pb-4">{items}</View>
             )}
             {footer ? <View className="gap-2 px-5 pt-2">{footer}</View> : null}
           </Animated.View>

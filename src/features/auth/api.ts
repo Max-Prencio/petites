@@ -1,8 +1,10 @@
 import { supabase } from '@/services/supabase';
 import type { ForgotPasswordInput, LoginInput, RegisterInput, ResetPasswordInput } from '@/schemas/auth';
 
-export async function signUp(input: RegisterInput): Promise<void> {
-  const { error } = await supabase.auth.signUp({
+// Devuelve si falta verificar el correo con código. Si el proyecto no exige confirmación
+// (staging sin dominio de correo), Supabase devuelve la sesión y el guard lleva al onboarding.
+export async function signUp(input: RegisterInput): Promise<{ needsVerification: boolean }> {
+  const { data, error } = await supabase.auth.signUp({
     email: input.email,
     password: input.password,
     options: {
@@ -10,6 +12,7 @@ export async function signUp(input: RegisterInput): Promise<void> {
     },
   });
   if (error) throw error;
+  return { needsVerification: !data.session };
 }
 
 export async function verifyEmailOtp(email: string, token: string): Promise<void> {

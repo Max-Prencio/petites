@@ -2,8 +2,9 @@ import { useRouter } from 'expo-router';
 import { Bell, ChevronRight, Heart, Search, Truck } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { AnimalCard } from '@/components/AnimalCard';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import { IconButton, PressableScale, Screen, Skeleton, Text } from '@/components/ui';
@@ -128,7 +129,7 @@ export default function HomeScreen() {
         </PressableScale>
 
         {activeRequest ? (
-          <Animated.View entering={FadeInDown} className="mx-5">
+          <Animated.View entering={fadeUp()} className="mx-5">
             <PressableScale
               onPress={() => router.push(`/requests/${activeRequest.id}`)}
               className="flex-row items-center gap-3 rounded-3xl bg-secondary p-4"

@@ -2,14 +2,14 @@ import { Image } from 'expo-image';
 import { Heart, MapPin, PawPrint } from 'lucide-react-native';
 import { View } from 'react-native';
 import Animated, {
-  FadeInDown,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
-  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 
 import { listingStatusLabel, listingTypeLabel } from '@/constants/labels';
+import { duration, easeOut, fadeUp } from '@/constants/motion';
 import { colors } from '@/constants/theme';
 import { tapFeedback } from '@/services/haptics';
 import type { ListingCard } from '@/types/models';
@@ -42,7 +42,7 @@ export function AnimalCard({
 
   return (
     <Animated.View
-      entering={FadeInDown.delay(Math.min(index, 8) * 40).duration(320)}
+      entering={fadeUp(index)}
       className="flex-1 p-1.5"
     >
       <PressableScale
@@ -80,7 +80,12 @@ export function AnimalCard({
               <PressableScale
                 testID={`favorite-${card.id}`}
                 onPress={() => {
-                  heartScale.set(withSequence(withSpring(1.3), withSpring(1)));
+                  heartScale.set(
+                    withSequence(
+                      withTiming(1.15, { duration: duration.fast, easing: easeOut }),
+                      withTiming(1, { duration: duration.base, easing: easeOut }),
+                    ),
+                  );
                   tapFeedback();
                   onToggleFavorite();
                 }}

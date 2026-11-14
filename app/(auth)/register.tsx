@@ -21,7 +21,9 @@ export default function RegisterScreen() {
 
   const submit = handleSubmit((input) =>
     signUp.mutate(input, {
-      onSuccess: () => router.replace({ pathname: '/verify-email', params: { email: input.email } }),
+      onSuccess: ({ needsVerification }) => {
+        if (needsVerification) router.replace({ pathname: '/verify-email', params: { email: input.email } });
+      },
       onError: (e) => toast.error(errorMessage(e)),
     }),
   );

@@ -1,7 +1,9 @@
 import { Check, ChevronDown, Search } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { Pressable, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
+import { fadeUp } from '@/constants/motion';
 import { colors } from '@/constants/theme';
 import { Input } from './Input';
 import { Modal } from './Modal';
@@ -26,6 +28,7 @@ interface Props<T extends string | number> {
 }
 
 const MAX_VISIBLE = 80;
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 // Búsqueda sin distinguir mayúsculas ni tildes ("pastor aleman" encuentra "Pastor Alemán")
 const normalize = (value: string) =>
@@ -93,10 +96,11 @@ export function Select<T extends string | number>({
               <Text className="text-ink-muted">Quitar selección</Text>
             </Pressable>
           ) : null}
-          {visible.map((option) => {
+          {visible.map((option, i) => {
             const isSelected = option.value === value;
             return (
-              <Pressable
+              <AnimatedPressable
+                entering={fadeUp(i)}
                 key={String(option.value)}
                 accessibilityRole="button"
                 accessibilityState={{ selected: isSelected }}
@@ -109,7 +113,7 @@ export function Select<T extends string | number>({
               >
                 <Text className={isSelected ? 'font-semibold text-primary' : ''}>{option.label}</Text>
                 {isSelected ? <Check size={18} color={colors.primary} /> : null}
-              </Pressable>
+              </AnimatedPressable>
             );
           })}
           {filtered.length === 0 ? <Text className="p-4 text-ink-muted">Sin resultados</Text> : null}

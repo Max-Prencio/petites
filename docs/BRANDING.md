@@ -60,3 +60,9 @@ Los mismos textos se usan en la línea de tiempo de la app y en las notificacion
 - Tarjetas: foto 4:5 protagonista, esquinas de 26 px, sombra suave en lugar de borde.
 - Fotos rápidas: se comprimen en el teléfono antes de subir (máx. 1280 px, JPEG 72 %; avatar 512 px) y `expo-image` las cachea en memoria y disco.
 - Retroalimentación háptica ligera al cambiar de pestaña y al guardar en Mi lista.
+
+## Movimiento
+
+- Todo en `src/constants/motion.ts`: **fade-up** suave (aparece subiendo unos píxeles) con curva de salida, **sin rebotes**.
+- Listas, menús y opciones de las hojas entran escalonadas (45 ms entre elementos, máx. 10).
+- Botones: leve encogimiento al presionar, con tiempo fijo (sin resorte). Hojas inferiores suben sin sobrepaso.

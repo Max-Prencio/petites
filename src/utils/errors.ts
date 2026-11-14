@@ -15,10 +15,15 @@ export function errorMessage(error: unknown): string {
     return 'Primero verifica tu correo con el código que te enviamos.';
   if (message.includes('User already registered')) return 'Ya existe una cuenta con este correo.';
   if (message.includes('Token has expired or is invalid')) return 'El código no es válido o expiró.';
+  if (message.includes('Error sending'))
+    return 'No pudimos enviarte el código por correo. Inténtalo de nuevo en unos minutos.';
+  if (message.toLowerCase().includes('rate limit'))
+    return 'Hiciste varios intentos seguidos. Espera un momento y vuelve a intentarlo.';
   if (message.toLowerCase().includes('network')) return 'Sin conexión. Revisa tu internet.';
   if (code === '23505') return 'Este registro ya existe.';
   if (code === '42501' || message.includes('row-level security')) {
-    return message && !message.includes('row-level security')
+    // Mensajes propios de las funciones de la BD sí se muestran; los técnicos de Postgres, no
+    return message && !message.includes('row-level security') && !message.startsWith('permission denied')
       ? message
       : 'No tienes permiso para esta acción.';
   }

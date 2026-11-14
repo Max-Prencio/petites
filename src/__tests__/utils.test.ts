@@ -1,4 +1,5 @@
 import { activeFilterCount, defaultFilters, useFiltersStore } from '@/stores/filtersStore';
+import { errorMessage } from '@/utils/errors';
 import { formatAge, formatPrice, initials } from '@/utils/format';
 import { sanitizeSearch } from '@/utils/search';
 
@@ -48,5 +49,21 @@ describe('filtersStore', () => {
   it('cuenta los filtros activos', () => {
     expect(activeFilterCount(defaultFilters)).toBe(0);
     expect(activeFilterCount({ ...defaultFilters, vaccinated: true, provinceId: 1 })).toBe(2);
+  });
+});
+
+describe('errorMessage', () => {
+  it('no muestra errores técnicos de Postgres', () => {
+    expect(errorMessage({ code: '42501', message: 'permission denied for table animal_images' })).toBe(
+      'No tienes permiso para esta acción.',
+    );
+  });
+
+  it('explica cuando no se pudo enviar el código por correo', () => {
+    expect(errorMessage({ message: 'Error sending confirmation email' })).toMatch(/No pudimos enviarte el código/);
+  });
+
+  it('conserva los mensajes propios de las funciones de la BD', () => {
+    expect(errorMessage({ code: '42501', message: 'Tu cuenta está suspendida.' })).toBe('Tu cuenta está suspendida.');
   });
 });

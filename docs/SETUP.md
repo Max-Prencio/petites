@@ -72,3 +72,12 @@ pnpm e2e                # Maestro con la app instalada en simulador/emulador y S
    insert into public.user_roles (user_id, role) values ('<uuid>', 'admin');
    ```
 7. `.env` de producción con la URL y la anon key del proyecto. Nunca uses la service role en la app.
+
+## 6. Staging para QA (ya creado)
+
+- Supabase: proyecto `petites-staging` (`dsjcnjltkewfkgddnomq`, us-east-1). Contraseña de la BD y de las cuentas QA solo en `supabase/.temp/` (excluido de git).
+- Datos: catálogo de referencia + `cliente@`, `vendedor@` y `admin@petites.test` (verificadas) + 3 publicaciones de ejemplo del vendedor.
+- EAS: proyecto `@maxwel.prencio/petites`; variables `EXPO_PUBLIC_SUPABASE_*` en el entorno `preview`.
+- APK para QA: `npx eas-cli build -p android --profile preview` → enlace/QR de instalación interna.
+- Pendiente: SMTP propio (p. ej. Resend) en Auth → SMTP para habilitar las plantillas con código de 6 dígitos de `supabase/templates/`; sin eso el registro envía un enlace y la app espera un código.
+- Push remoto en Android requiere credenciales FCM en EAS (`eas credentials`); las notificaciones dentro de la app funcionan sin ellas.

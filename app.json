@@ -24,14 +24,22 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
-      ["expo-router", { "root": "./app" }],
+      [
+        "expo-router",
+        {
+          "root": "./app"
+        }
+      ],
       "expo-image",
       "expo-status-bar",
       [
@@ -41,10 +49,27 @@
           "cameraPermission": "Petites usa la cámara para tomar fotos de la mascota que publicas."
         }
       ],
-      ["expo-notifications", { "color": "#F47B35" }]
+      [
+        "expo-notifications",
+        {
+          "color": "#F47B35"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "root": "./app",
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "7a771ddb-9ba5-4831-9ed8-f5bb157708ce"
+      }
+    },
+    "owner": "maxwel.prencio"
   }
 }

@@ -1,5 +1,27 @@
 {
-  "enabledPlugins": {
-    "expo@claude-plugins-official": true
+  "permissions": {
+    "allow": [
+      "Bash(npx expo lint)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx jest*)",
+      "Bash(pnpm test*)",
+      "Bash(supabase test db)",
+      "Bash(supabase status*)",
+      "Bash(supabase migration new *)",
+      "Bash(gitleaks detect*)"
+    ],
+    "deny": ["Read(./.env)", "Read(./.env.*.local)", "Bash(supabase db push --linked*)"]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-commit-checks.sh", "timeout": 300 }]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [{ "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-secrets.sh" }]
+      }
+    ]
   }
 }

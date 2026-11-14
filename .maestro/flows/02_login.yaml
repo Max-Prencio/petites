@@ -1,0 +1,19 @@
+appId: do.petites.app
+name: Inicio de sesión con usuaria del seed
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "go-login"
+- tapOn:
+    id: "login-email"
+- inputText: "ana@petites.test"
+- tapOn:
+    id: "login-password"
+- inputText: "Petites123"
+- hideKeyboard
+- tapOn:
+    id: "login-submit"
+- assertVisible: "Sus patitas en camino hacia ti"
+- assertVisible:
+    id: "tab-explore"

@@ -1,17 +1,25 @@
 {
   "expo": {
-    "name": "marketplace-animales",
-    "slug": "marketplace-animales",
+    "name": "Petites",
+    "slug": "petites",
+    "scheme": "petites",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#F8F5EF",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "do.petites.app",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Petites necesita acceso a tus fotos para mostrar a tu mascota en su publicación.",
+        "NSCameraUsageDescription": "Petites usa la cámara para tomar fotos de la mascota que publicas."
+      }
     },
     "android": {
+      "package": "do.petites.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#F8F5EF",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -19,7 +27,24 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      ["expo-router", { "root": "./app" }],
+      "expo-image",
+      "expo-status-bar",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Petites necesita acceso a tus fotos para mostrar a tu mascota en su publicación.",
+          "cameraPermission": "Petites usa la cámara para tomar fotos de la mascota que publicas."
+        }
+      ],
+      ["expo-notifications", { "color": "#F47B35" }]
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }

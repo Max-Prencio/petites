@@ -1,0 +1,12 @@
+title = "Petites gitleaks config"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "supabase-service-role"
+description = "Supabase service role JWT"
+regex = '''(?i)service_role[^\n]{0,40}eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'''
+
+[allowlist]
+paths = ['''\.env\.example''', '''pnpm-lock\.yaml''']

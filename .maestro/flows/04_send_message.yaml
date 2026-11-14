@@ -1,0 +1,15 @@
+appId: do.petites.app
+name: Preguntar por una mascota y enviar mensaje
+---
+- runFlow: 02_login.yaml
+- tapOn:
+    id: "home-adopt"
+- tapOn: "Canela"
+- tapOn:
+    id: "detail-ask"
+- tapOn:
+    id: "chat-input"
+- inputText: "¡Hola! ¿Canela se lleva bien con gatos?"
+- tapOn:
+    id: "chat-send"
+- assertVisible: "¡Hola! ¿Canela se lleva bien con gatos?"

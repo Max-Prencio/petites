@@ -1,0 +1,32 @@
+appId: do.petites.app
+name: Pedir adopción y seguir sus patitas
+---
+- runFlow: 02_login.yaml
+- tapOn:
+    id: "home-adopt"
+- tapOn: "Milo"
+- tapOn:
+    id: "detail-request"
+- tapOn:
+    id: "request-next"
+- tapOn:
+    id: "request-experience"
+- inputText: "He tenido gatos desde niña y sé cuidarlos."
+- tapOn:
+    id: "request-commitment"
+- inputText: "Quiero darle un hogar tranquilo y con ventanas protegidas."
+- hideKeyboard
+- tapOn:
+    id: "request-next"
+- tapOn:
+    id: "request-address"
+- inputText: "Calle Gustavo Mejía Ricart 10, Piantini"
+- hideKeyboard
+- tapOn:
+    id: "request-next"
+- tapOn:
+    id: "request-accept"
+- tapOn:
+    id: "request-submit"
+- assertVisible: "Seguir sus patitas"
+- assertVisible: "Solicitud enviada"

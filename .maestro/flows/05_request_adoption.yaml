@@ -1,4 +1,4 @@
-appId: do.petites.app
+appId: com.petites.app
 name: Pedir adopción y seguir sus patitas
 ---
 - runFlow: 02_login.yaml

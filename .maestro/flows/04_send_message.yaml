@@ -1,4 +1,4 @@
-appId: do.petites.app
+appId: com.petites.app
 name: Preguntar por una mascota y enviar mensaje
 ---
 - runFlow: 02_login.yaml

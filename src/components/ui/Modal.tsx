@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { KeyboardAvoidingView, Modal as RNModal, Platform, Pressable, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, Modal as RNModal, Pressable, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { X } from 'lucide-react-native';
@@ -23,7 +23,7 @@ export function Modal({ visible, onClose, title, children, footer, scrollable = 
     <RNModal visible={visible} transparent animationType="none" onRequestClose={onClose} statusBarTranslucent>
       {visible ? (
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior="padding"
           className="flex-1 justify-end"
         >
           <Animated.View

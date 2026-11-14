@@ -1,4 +1,4 @@
-appId: do.petites.app
+appId: com.petites.app
 name: Registro de cuenta nueva
 ---
 - launchApp:

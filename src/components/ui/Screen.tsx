@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 interface Props {
@@ -21,7 +21,7 @@ export function Screen({
 }: Props) {
   return (
     <SafeAreaView edges={edges} className={`flex-1 bg-ivory ${className}`}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1">
+      <KeyboardAvoidingView behavior="padding" className="flex-1">
         {scroll ? (
           <ScrollView
             keyboardShouldPersistTaps="handled"

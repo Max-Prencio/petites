@@ -93,7 +93,7 @@ export async function fetchListingCardsByIds(ids: string[]): Promise<ListingCard
 const detailSelect = `
   *,
   province:provinces(name),
-  owner:profiles(id, full_name, avatar_path, partner_type, city, created_at, province:provinces(name)),
+  owner:profiles!listings_owner_id_fkey(id, full_name, avatar_path, partner_type, city, created_at, province:provinces(name)),
   animal:animals(
     *,
     category:categories(name, slug),

@@ -37,7 +37,8 @@ export const Input = forwardRef<ComponentRef<typeof TextInput>, InputProps>(func
           multiline={multiline}
           textAlignVertical={multiline ? 'top' : 'center'}
           placeholderTextColor={colors.inkFaint}
-          className="flex-1 text-[15px] text-ink"
+          // En multilínea ocupa toda la caja para que cualquier toque la enfoque
+          className={`flex-1 text-[15px] text-ink ${multiline ? 'min-h-[86px] self-stretch' : ''}`}
           accessibilityLabel={label}
           onFocus={(e) => {
             setFocused(true);

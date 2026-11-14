@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
-  Platform,
   Pressable,
   TextInput,
   View,
@@ -90,12 +89,22 @@ export default function ChatScreen() {
         }
       />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior="padding"
         className="flex-1"
         keyboardVerticalOffset={8}
       >
         {messages.isPending ? (
           <LoadingState />
+        ) : items.length === 0 ? (
+          // Fuera de la FlatList invertida: su ListEmptyComponent se dibuja volteado
+          <View className="flex-1 items-center justify-end gap-2 p-8">
+            <Text variant="subtitle" className="text-center">
+              Rompe el hielo 🐾
+            </Text>
+            <Text className="text-center text-ink-muted">
+              Pregunta por su rutina, su salud o cómo coordinar la llegada.
+            </Text>
+          </View>
         ) : (
           <FlatList
             inverted
@@ -108,16 +117,6 @@ export default function ChatScreen() {
             }}
             ListFooterComponent={
               messages.isFetchingNextPage ? <ActivityIndicator color={colors.primary} /> : undefined
-            }
-            ListEmptyComponent={
-              <View className="items-center gap-2 p-8" style={{ transform: [{ scaleY: -1 }] }}>
-                <Text variant="subtitle" className="text-center">
-                  Rompe el hielo 🐾
-                </Text>
-                <Text className="text-center text-ink-muted">
-                  Pregunta por su rutina, su salud o cómo coordinar la llegada.
-                </Text>
-              </View>
             }
             renderItem={({ item }) => {
               const mine = item.sender_id === userId;

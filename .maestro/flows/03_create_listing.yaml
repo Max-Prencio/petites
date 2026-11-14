@@ -1,4 +1,4 @@
-appId: do.petites.app
+appId: com.petites.app
 name: Crear publicación de adopción
 ---
 - runFlow: 02_login.yaml

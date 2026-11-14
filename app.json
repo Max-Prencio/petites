@@ -10,14 +10,14 @@
     "backgroundColor": "#F8F5EF",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "do.petites.app",
+      "bundleIdentifier": "com.petites.app",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Petites necesita acceso a tus fotos para mostrar a tu mascota en su publicación.",
         "NSCameraUsageDescription": "Petites usa la cámara para tomar fotos de la mascota que publicas."
       }
     },
     "android": {
-      "package": "do.petites.app",
+      "package": "com.petites.app",
       "adaptiveIcon": {
         "backgroundColor": "#F8F5EF",
         "foregroundImage": "./assets/android-icon-foreground.png",

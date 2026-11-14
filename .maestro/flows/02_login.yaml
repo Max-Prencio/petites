@@ -1,4 +1,4 @@
-appId: do.petites.app
+appId: com.petites.app
 name: Inicio de sesión con usuaria del seed
 ---
 - launchApp:

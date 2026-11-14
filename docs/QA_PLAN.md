@@ -10,7 +10,7 @@ Dos dispositivos Android al mismo tiempo; cada caso indica quién actúa: **[C]*
    - **[C]** `cliente@petites.test` — Distrito Nacional
    - **[V]** `vendedor@petites.test` — refugio en Santiago
    - `admin@petites.test` — panel de administración (opcional)
-3. **Registro y recuperación (A1, A3) están bloqueados en staging**: el plan gratuito de Supabase no permite la plantilla de correo con código de 6 dígitos sin un SMTP propio, y envía un enlace en su lugar. Usa las cuentas preparadas hasta configurar SMTP (ver `docs/SETUP.md`).
+3. **Registro y recuperación (A1, A3)**: los correos salen por Resend en modo de prueba, así que **solo llegan al correo dueño de la cuenta Resend**. Hasta verificar un dominio en Resend, esos casos los prueba esa persona; el resto usa las cuentas preparadas.
 
 Registra cada fallo con: ID del caso, dispositivo/Android, pasos, resultado esperado vs. obtenido y captura.
 
@@ -18,9 +18,9 @@ Registra cada fallo con: ID del caso, dispositivo/Android, pasos, resultado espe
 
 | ID | Quién | Pasos | Esperado |
 |---|---|---|---|
-| A1 ⛔ | C | Crear cuenta con correo propio → código de 6 dígitos → onboarding | Llega el correo con código; entra a Inicio tras completar perfil |
+| A1 | C | Crear cuenta con correo propio → código de 6 dígitos → onboarding | Llega el correo con código; entra a Inicio tras completar perfil |
 | A2 | C | Login con contraseña incorrecta | Mensaje claro, sin entrar |
-| A3 ⛔ | C | ¿Olvidaste tu contraseña? con correo propio | Llega código y permite cambiarla |
+| A3 | C | ¿Olvidaste tu contraseña? con correo propio | Llega código y permite cambiarla |
 | A4 | V | Editar perfil (nombre, ciudad, foto) | Se guarda y se ve en el perfil público |
 | A5 | C/V | Cerrar sesión y volver a entrar | Vuelve a Bienvenida; la sesión se recupera al reabrir la app |
 

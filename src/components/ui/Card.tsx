@@ -11,12 +11,21 @@ interface Props {
 
 export function Card({ children, title, className = '' }: Props) {
   return (
-    <View className={`gap-3 rounded-3xl border border-line bg-surface p-4 ${className}`}>
+    <View className={`gap-3 rounded-[24px] bg-surface p-4 ${className}`} style={cardShadow}>
       {title ? <Text variant="subtitle">{title}</Text> : null}
       {children}
     </View>
   );
 }
+
+// Sombra suave de tarjeta iOS en lugar de borde marcado
+const cardShadow = {
+  shadowColor: '#1C1A17',
+  shadowOpacity: 0.06,
+  shadowRadius: 12,
+  shadowOffset: { width: 0, height: 4 },
+  elevation: 2,
+};
 
 export function InfoRow({ label, value }: { label: string; value: string }) {
   return (

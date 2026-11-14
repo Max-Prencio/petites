@@ -30,7 +30,7 @@ export default function MessagesScreen() {
         <FlatList
           data={conversations.data}
           keyExtractor={(c) => c.id}
-          contentContainerClassName="px-5 pb-10 gap-2"
+          contentContainerClassName="px-5 pb-32 gap-2"
           refreshing={conversations.isRefetching}
           onRefresh={() => void conversations.refetch()}
           renderItem={({ item }) => {

@@ -26,6 +26,7 @@ import {
   Button,
   Card,
   ErrorState,
+  Glass,
   IconButton,
   InfoRow,
   LoadingState,
@@ -106,7 +107,9 @@ export default function AnimalDetailScreen() {
                   source={{ uri: img.url }}
                   style={{ width, height: width }}
                   contentFit="cover"
-                  transition={200}
+                  transition={150}
+                  cachePolicy="memory-disk"
+                  priority="high"
                   accessibilityLabel={`Foto de ${title}`}
                 />
               ))}
@@ -292,52 +295,51 @@ export default function AnimalDetailScreen() {
         </Animated.View>
       </ScrollView>
 
-      <SafeAreaView
-        edges={['bottom']}
-        className="absolute bottom-0 left-0 right-0 border-t border-line bg-surface px-5 pt-3"
-      >
-        {isOwner ? (
-          <View className="flex-row gap-3 pb-2">
-            <Button
-              title="Editar"
-              icon={Pencil}
-              variant="outline"
-              className="flex-1"
-              onPress={() => router.push(`/listings/edit/${l.id}`)}
-            />
-            <Button
-              title="Solicitudes"
-              variant="secondary"
-              className="flex-1"
-              onPress={() => router.push('/requests/received')}
-            />
-          </View>
-        ) : (
-          <View className="flex-row gap-3 pb-2">
-            <Button
-              testID="detail-ask"
-              title={cta.ask}
-              icon={MessageCircle}
-              variant="outline"
-              className="flex-1"
-              loading={startConversation.isPending}
-              onPress={ask}
-            />
-            <Button
-              testID="detail-request"
-              title={
-                available
-                  ? isAdoption
-                    ? cta.requestAdoption
-                    : cta.requestArrival
-                  : listingStatusLabel[l.status]
-              }
-              className="flex-[1.6]"
-              disabled={!available}
-              onPress={() => router.push(`/requests/new/${l.id}`)}
-            />
-          </View>
-        )}
+      <SafeAreaView edges={['bottom']} className="absolute bottom-0 left-0 right-0 px-3 pb-1">
+        <Glass className="rounded-[28px] px-3 pt-3">
+          {isOwner ? (
+            <View className="flex-row gap-3 pb-2">
+              <Button
+                title="Editar"
+                icon={Pencil}
+                variant="outline"
+                className="flex-1"
+                onPress={() => router.push(`/listings/edit/${l.id}`)}
+              />
+              <Button
+                title="Solicitudes"
+                variant="secondary"
+                className="flex-1"
+                onPress={() => router.push('/requests/received')}
+              />
+            </View>
+          ) : (
+            <View className="flex-row gap-3 pb-2">
+              <Button
+                testID="detail-ask"
+                title={cta.ask}
+                icon={MessageCircle}
+                variant="outline"
+                className="flex-1"
+                loading={startConversation.isPending}
+                onPress={ask}
+              />
+              <Button
+                testID="detail-request"
+                title={
+                  available
+                    ? isAdoption
+                      ? cta.requestAdoption
+                      : cta.requestArrival
+                    : listingStatusLabel[l.status]
+                }
+                className="flex-[1.6]"
+                disabled={!available}
+                onPress={() => router.push(`/requests/new/${l.id}`)}
+              />
+            </View>
+          )}
+        </Glass>
       </SafeAreaView>
       <ReportModal
         visible={reporting}

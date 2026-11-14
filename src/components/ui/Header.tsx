@@ -22,12 +22,13 @@ export function Header({ title, subtitle, back = true, right }: Props) {
         <IconButton
           icon={ChevronLeft}
           label="Volver"
+          variant="glass"
           onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
         />
       ) : null}
       <View className="flex-1">
         {title ? (
-          <Text variant="subtitle" numberOfLines={1}>
+          <Text className="text-[17px] font-bold tracking-tight text-ink" numberOfLines={1}>
             {title}
           </Text>
         ) : null}

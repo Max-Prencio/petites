@@ -102,9 +102,9 @@ begin
 
   insert into public.animals (owner_id, category_id, breed_id, name, age_value, age_unit, sex, size,
     vaccinated, vaccination_complete, dewormed, sterilized, description, personality_tags, good_for_apartment)
-  values (v_refugio, v_gatos, (select id from public.breeds where name = 'Siamés'),
+  values (v_refugio, v_gatos, (select id from public.breeds where name = 'Mestizo' and category_id = v_gatos),
     'Milo', 2, 'years', 'male', 'small', 'yes', 'unknown', 'yes', 'yes',
-    'Milo es tranquilo, independiente y ama las ventanas soleadas. Ideal para apartamento.',
+    'Milo es un atigrado tranquilo e independiente que ama las ventanas soleadas. Ideal para apartamento.',
     array['Tranquilo', 'Independiente'], true)
   returning id into v_animal;
   insert into public.listings (owner_id, animal_id, listing_type, province_id, city, conditions, contract_terms, delivery_window)
@@ -115,15 +115,78 @@ begin
 
   insert into public.animals (owner_id, category_id, breed_id, name, age_value, age_unit, sex, size,
     vaccinated, vaccination_complete, dewormed, description, personality_tags, good_for_apartment)
-  values (v_ana, v_perros, (select id from public.breeds where name = 'Poodle'),
+  values (v_ana, v_perros, (select id from public.breeds where name = 'Bulldog Francés'),
     'Luna', 3, 'months', 'female', 'small', 'yes', 'no', 'yes',
-    'Luna es una poodle toy muy activa, con primeras vacunas y desparasitada. Criada en casa con amor.',
+    'Luna es una bulldog francés juguetona, con primeras vacunas y desparasitada. Criada en casa con amor.',
     array['Activa', 'Cariñosa'], true)
   returning id into v_animal;
   insert into public.listings (owner_id, animal_id, listing_type, price, currency, province_id, city, conditions,
     contract_terms, allows_delivery, allows_pickup, delivery_window)
-  values (v_ana, v_animal, 'sale', 18000, 'DOP', v_dn, 'Piantini',
+  values (v_ana, v_animal, 'sale', 35000, 'DOP', v_dn, 'Piantini',
     'Se entrega con carnet de vacunas y kit de bienvenida.',
     'Me comprometo a completar su esquema de vacunación y brindarle cuidados responsables.',
     false, true, 'Sáb–Dom · 10:00 AM – 2:00 PM');
+
+  -- Más publicaciones de ejemplo para un catálogo con variedad
+  insert into public.animals (owner_id, category_id, breed_id, name, age_value, age_unit, sex, size,
+    vaccinated, vaccination_complete, dewormed, sterilized, description, personality_tags, good_for_apartment)
+  values (v_refugio, v_gatos, (select id from public.breeds where name = 'Mestizo' and category_id = v_gatos),
+    'Nala', 1, 'years', 'female', 'small', 'yes', 'yes', 'yes', 'yes',
+    'Nala es una gata naranja curiosa y conversadora. Le encantan las cajas y dormir al sol.',
+    array['Curiosa', 'Cariñosa'], true)
+  returning id into v_animal;
+  insert into public.listings (owner_id, animal_id, listing_type, province_id, city, conditions, contract_terms, delivery_window)
+  values (v_refugio, v_animal, 'adoption', v_stgo, 'Santiago de los Caballeros',
+    'Hogar con ventanas protegidas. Seguimiento a los 7 y 30 días.',
+    'Me comprometo a mantenerla dentro de casa, con ventanas protegidas, y a llevarla al veterinario al menos una vez al año.',
+    'Mar–Dom · 9:00 AM – 4:00 PM');
+
+  insert into public.animals (owner_id, category_id, name, age_value, age_unit, sex, size,
+    vaccinated, dewormed, description, personality_tags, good_for_apartment)
+  values (v_refugio, (select id from public.categories where slug = 'conejos'),
+    'Coco', 6, 'months', 'male', 'small', 'unknown', 'yes',
+    'Coco es un conejo blanco dócil, acostumbrado a que lo carguen. Come heno, verduras y mucho cariño.',
+    array['Dócil', 'Tranquilo'], true)
+  returning id into v_animal;
+  insert into public.listings (owner_id, animal_id, listing_type, province_id, city, conditions, contract_terms, delivery_window)
+  values (v_refugio, v_animal, 'adoption', v_stgo, 'Santiago de los Caballeros',
+    'Espacio amplio para moverse fuera de la jaula al menos 3 horas al día.',
+    'Me comprometo a darle espacio, alimentación adecuada y atención veterinaria cuando la necesite.',
+    'Lun–Sáb · 10:00 AM – 5:00 PM');
+
+  insert into public.animals (owner_id, category_id, breed_id, name, age_value, age_unit, sex, size,
+    vaccinated, dewormed, description, personality_tags, good_for_apartment)
+  values (v_refugio, (select id from public.categories where slug = 'aves'),
+    (select id from public.breeds where name = 'Periquito'),
+    'Kiwi', 8, 'months', 'male', 'small', 'unknown', 'yes',
+    'Kiwi es un periquito verde muy sociable que ya silba algunas melodías. Se entrega con su jaula.',
+    array['Sociable', 'Cantor'], true)
+  returning id into v_animal;
+  insert into public.listings (owner_id, animal_id, listing_type, price, currency, province_id, city, conditions,
+    contract_terms, allows_delivery, allows_pickup, delivery_window)
+  values (v_refugio, v_animal, 'sale', 2500, 'DOP', v_stgo, 'Santiago de los Caballeros',
+    'Incluye jaula, comedero y una bolsa de alimento.',
+    'Me comprometo a mantenerlo en un espacio limpio, ventilado y lejos de corrientes de aire.',
+    true, true, 'Lun–Sáb · 10:00 AM – 5:00 PM');
+
+  insert into public.animals (owner_id, category_id, breed_id, name, age_value, age_unit, sex, size,
+    vaccinated, vaccination_complete, dewormed, sterilized, description, personality_tags, good_for_apartment)
+  values (v_refugio, v_perros, (select id from public.breeds where name = 'Mestizo' and category_id = v_perros),
+    'Rocky', 3, 'years', 'male', 'large', 'yes', 'yes', 'yes', 'yes',
+    'Rocky es alegre, enérgico y ama correr en la playa. Ideal para una familia activa con patio.',
+    array['Enérgico', 'Leal', 'Juguetón'], false)
+  returning id into v_animal;
+  insert into public.listings (owner_id, animal_id, listing_type, province_id, city, conditions, contract_terms,
+    transfer_fee, delivery_window)
+  values (v_refugio, v_animal, 'adoption', v_stgo, 'Santiago de los Caballeros',
+    'Casa con patio. Paseos diarios. Visita previa obligatoria.',
+    'Me comprometo a darle ejercicio diario, alimento, atención veterinaria y a no venderlo ni abandonarlo.',
+    1500, 'Lun–Sáb · 10:00 AM – 5:00 PM');
+
+  -- Fotos (archivos en supabase/seed-assets/animal-photos/<dueño>/<nombre>.jpg, subidos por `supabase seed buckets`)
+  insert into public.animal_images (animal_id, storage_path, sort_order)
+  select a.id, a.owner_id || '/' || lower(a.name) || '.jpg', 0
+  from public.animals a
+  where a.name in ('Canela', 'Milo', 'Luna', 'Nala', 'Coco', 'Kiwi', 'Rocky')
+  on conflict do nothing;
 end $$;

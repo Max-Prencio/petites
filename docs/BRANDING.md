@@ -52,3 +52,11 @@ Los mismos textos se usan en la línea de tiempo de la app y en las notificacion
 | Seguimiento post-entrega | Seguimientos a 7 y 30 días con recordatorio local y respuesta en la app. |
 | Educación sin sermones | Micro-consejos en el último paso de la solicitud. |
 | Momentos compartibles | "Compartir la experiencia" al completar la entrega y compartir desde la ficha. |
+
+## Estilo visual (iOS + Liquid Glass)
+
+- **Vidrio**: `src/components/ui/Glass.tsx`. En iOS 26+ usa el Liquid Glass nativo (`expo-glass-effect`); en Android e iOS anteriores, una superficie translúcida con borde de luz y sombra suave, **sin desenfoque en vivo** (rendimiento).
+- Dónde: barra de pestañas flotante, botones sobre fotos (volver, compartir, corazón), etiquetas de modalidad sobre la foto (punto verde = adopción, naranja = venta) y panel de acciones de la ficha.
+- Tarjetas: foto 4:5 protagonista, esquinas de 26 px, sombra suave en lugar de borde.
+- Fotos rápidas: se comprimen en el teléfono antes de subir (máx. 1280 px, JPEG 72 %; avatar 512 px) y `expo-image` las cachea en memoria y disco.
+- Retroalimentación háptica ligera al cambiar de pestaña y al guardar en Mi lista.

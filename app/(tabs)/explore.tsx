@@ -6,6 +6,7 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { AnimalCard } from '@/components/AnimalCard';
 import { FiltersSheet } from '@/components/FiltersSheet';
+import { TAB_BAR_CLEARANCE } from '@/components/TabBar';
 import { Chip, EmptyState, ErrorState, IconButton, Input, Screen, Skeleton, Text } from '@/components/ui';
 import { colors } from '@/constants/theme';
 import { coverUrl, useCatalog } from '@/features/animals';
@@ -95,7 +96,7 @@ export default function ExploreScreen() {
           data={items}
           numColumns={2}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: 32 }}
+          contentContainerStyle={{ paddingHorizontal: 14, paddingBottom: TAB_BAR_CLEARANCE }}
           renderItem={({ item, index }) => (
             <AnimalCard
               card={item}

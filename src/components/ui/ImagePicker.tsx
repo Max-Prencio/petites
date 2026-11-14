@@ -7,6 +7,7 @@ import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanim
 import { limits } from '@/constants/config';
 import { colors } from '@/constants/theme';
 import type { ImageAsset } from '@/schemas/listing';
+import { compressImage } from '@/services/imageCompression';
 import { toast } from '@/stores/uiStore';
 import { Text } from './Text';
 
@@ -36,7 +37,7 @@ export function ImagePicker({ label, value, onChange, max = limits.maxListingIma
       mediaTypes: ['images'],
       allowsMultipleSelection: true,
       selectionLimit: max - value.length,
-      quality: 0.8,
+      quality: 1,
     });
     if (result.canceled) return;
 
@@ -44,11 +45,18 @@ export function ImagePicker({ label, value, onChange, max = limits.maxListingIma
     let rejected = 0;
     for (const asset of result.assets) {
       const mime = asset.mimeType ?? 'image/jpeg';
-      if (!isAllowed(mime) || (asset.fileSize ?? 0) > limits.maxImageBytes) {
+      if (!isAllowed(mime)) {
         rejected++;
         continue;
       }
-      accepted.push({ uri: asset.uri, mimeType: mime, fileSize: asset.fileSize });
+      try {
+        // Se comprime antes de subir: fotos ligeras = catálogo rápido
+        const compressed = await compressImage({ uri: asset.uri, mimeType: mime });
+        accepted.push({ uri: compressed.uri, mimeType: 'image/jpeg' });
+      } catch {
+        if ((asset.fileSize ?? 0) > limits.maxImageBytes) rejected++;
+        else accepted.push({ uri: asset.uri, mimeType: mime, fileSize: asset.fileSize });
+      }
     }
     if (rejected > 0)
       toast.error(`${rejected} foto(s) no cumplen formato (JPG/PNG/WEBP) o pesan más de 5 MB.`);

@@ -87,7 +87,7 @@ export default function ProfileScreen() {
 
   return (
     <Screen>
-      <ScrollView contentContainerClassName="gap-5 px-5 pb-10 pt-2" showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerClassName="gap-5 px-5 pb-32 pt-2" showsVerticalScrollIndicator={false}>
         <Text variant="title">Mi perfil</Text>
         <View className="items-center gap-2 rounded-3xl border border-line bg-surface p-5">
           <Avatar uri={avatarUrl} name={profile.full_name} size={84} />

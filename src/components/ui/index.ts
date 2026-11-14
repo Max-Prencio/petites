@@ -12,6 +12,7 @@ export { Modal } from './Modal';
 export { PressableScale } from './PressableScale';
 export { Screen } from './Screen';
 export { Select, type SelectOption } from './Select';
+export { Glass } from './Glass';
 export { EmptyState, ErrorState, LoadingState, Skeleton } from './StateViews';
 export { Stepper } from './Stepper';
 export { Text } from './Text';

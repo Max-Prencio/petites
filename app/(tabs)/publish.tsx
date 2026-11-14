@@ -17,7 +17,7 @@ export default function PublishScreen() {
 
   return (
     <Screen>
-      <ScrollView contentContainerClassName="gap-5 px-5 pb-10 pt-2" showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerClassName="gap-5 px-5 pb-32 pt-2" showsVerticalScrollIndicator={false}>
         <View className="gap-1">
           <Text variant="title">Publicar</Text>
           <Text className="text-ink-muted">Muéstrale al mundo quién está buscando hogar.</Text>

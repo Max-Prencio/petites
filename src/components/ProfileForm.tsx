@@ -10,6 +10,7 @@ import { colors } from '@/constants/theme';
 import { useProvinces } from '@/features/animals';
 import { useUpdateAvatar, useUpdateProfile, type MyProfile } from '@/features/auth';
 import { profileSchema, type ProfileInput } from '@/schemas/profile';
+import { compressImage } from '@/services/imageCompression';
 import { toast } from '@/stores/uiStore';
 import { errorMessage } from '@/utils/errors';
 import { FormChips, FormInput, FormSelect } from './form';
@@ -51,18 +52,20 @@ export function ProfileForm({ me, submitLabel, markOnboarded = false, onSaved }:
       mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.7,
+      quality: 1,
     });
     if (result.canceled) return;
     const asset = result.assets[0];
     if (!asset) return;
-    if ((asset.fileSize ?? 0) > limits.maxAvatarBytes) {
+    const original = { uri: asset.uri, mimeType: asset.mimeType ?? 'image/jpeg' };
+    const file = await compressImage(original, 512).catch(() => null);
+    if (!file && (asset.fileSize ?? 0) > limits.maxAvatarBytes) {
       toast.error('La foto debe pesar menos de 2 MB.');
       return;
     }
     avatar.mutate(
       {
-        file: { uri: asset.uri, mimeType: asset.mimeType ?? 'image/jpeg' },
+        file: file ?? original,
         previousPath: me.profile.avatar_path,
       },
       { onSuccess: () => toast.success('Foto actualizada'), onError: (e) => toast.error(errorMessage(e)) },

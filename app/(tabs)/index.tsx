@@ -96,7 +96,7 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-6 pb-10">
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-6 pb-32">
         <View className="flex-row items-center justify-between px-5 pt-2">
           <View className="flex-1">
             <Text variant="caption">Hola, {firstName} 👋</Text>

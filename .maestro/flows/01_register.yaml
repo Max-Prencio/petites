@@ -1,0 +1,29 @@
+appId: com.petites.app
+name: Registro de cuenta nueva
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "go-register"
+- tapOn:
+    id: "register-first-name"
+- inputText: "Laura"
+- tapOn:
+    id: "register-last-name"
+- inputText: "Pérez"
+- tapOn:
+    id: "register-email"
+- inputRandomEmail
+- tapOn:
+    id: "register-phone"
+- inputText: "+18095551234"
+- tapOn:
+    id: "register-password"
+- inputText: "Petites123"
+- tapOn:
+    id: "register-confirm"
+- inputText: "Petites123"
+- hideKeyboard
+- tapOn:
+    id: "register-submit"
+- assertVisible: "Revisa tu correo"

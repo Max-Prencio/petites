@@ -1,0 +1,5 @@
+nodeLinker: hoisted
+
+# pnpm 11 falla en CI si hay scripts de build sin decidir. @parcel/watcher trae binarios precompilados.
+allowBuilds:
+  '@parcel/watcher': false

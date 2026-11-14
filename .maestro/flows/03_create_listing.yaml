@@ -1,0 +1,43 @@
+appId: com.petites.app
+name: Crear publicación de adopción
+---
+- runFlow: 02_login.yaml
+- tapOn:
+    id: "tab-publish"
+- tapOn:
+    id: "publish-adoption"
+# Fotos: requiere al menos una imagen en la galería del simulador/emulador.
+- tapOn:
+    id: "image-picker-add"
+- tapOn:
+    point: "50%,30%"
+- tapOn:
+    text: "(Add|Agregar|Done|Listo)"
+    optional: true
+- tapOn:
+    id: "listing-next"
+- tapOn:
+    id: "listing-name"
+- inputText: "Rocky"
+- tapOn:
+    id: "listing-category"
+- tapOn: "Perros"
+- tapOn:
+    id: "listing-age"
+- inputText: "2"
+- tapOn:
+    id: "listing-description"
+- inputText: "Rocky es un perrito alegre y tranquilo que adora los paseos."
+- hideKeyboard
+- tapOn:
+    id: "listing-next"
+- tapOn:
+    id: "listing-next"
+- tapOn:
+    id: "listing-conditions"
+- inputText: "Mayor de edad, visita previa y compromiso de esterilización."
+- hideKeyboard
+- tapOn:
+    id: "listing-submit"
+- assertVisible: "Rocky"
+- assertVisible: "Adopción responsable"

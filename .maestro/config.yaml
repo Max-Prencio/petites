@@ -1,0 +1,3 @@
+# Flujos críticos del MVP. Requieren un development build instalado y Supabase local con el seed.
+flows:
+  - "flows/*"
